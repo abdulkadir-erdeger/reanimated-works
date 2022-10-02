@@ -5,11 +5,14 @@ import PanGestureHandlerWork from './examples/PanGestureHandlerWork'
 import InterpolateWithScrollView from './examples/InterpolateWithScrollView'
 import InterpolateColors from './examples/InterpolateColors'
 import PinchGestureHandlerWork from './examples/PinchGestureHandlerWork'
+import AnimateOnDoubleTap from './examples/AnimateOnDoubleTap'
+import ColorPickerWork from './examples/ColorPickerWork'
+import CircularProgressBar from './examples/CircularProgressBar'
 
 const App = () => {
   return (
     <View style={styles.container}>
-  <PinchGestureHandlerWork/>
+  <CircularProgressBar/>
     </View>
   )
 }
