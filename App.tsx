@@ -12,7 +12,7 @@ import CircularProgressBar from './examples/CircularProgressBar'
 const App = () => {
   return (
     <View style={styles.container}>
-  <CircularProgressBar/>
+  <PanGestureHandlerWork/>
     </View>
   )
 }

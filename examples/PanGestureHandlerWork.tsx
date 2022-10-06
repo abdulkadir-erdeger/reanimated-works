@@ -1,4 +1,4 @@
-import { View,StyleSheet } from 'react-native'
+import { View,StyleSheet,Dimensions, Image } from 'react-native'
 import React from 'react'
 import Animated, { useAnimatedGestureHandler, useAnimatedStyle, useSharedValue,withSpring } from 'react-native-reanimated';
 import {
@@ -7,17 +7,18 @@ import {
   PanGestureHandlerGestureEvent,
 } from 'react-native-gesture-handler';
 
-const SIZE=100.0;
-const CIRCLE_RADIUS = SIZE * 2;
+
+const {width,height}=Dimensions.get("window");
 
 type ContextType={
   translateX:number,
-  translateY:number
+  translateY:number,
 }
 
 const PanGestureHandlerWork = () => {
   const translateX=useSharedValue(0);
   const translateY = useSharedValue(0);
+
   const panGestureEvent = useAnimatedGestureHandler<
   PanGestureHandlerGestureEvent,
   ContextType>
@@ -29,11 +30,11 @@ const PanGestureHandlerWork = () => {
     onActive:(event,context)=>{
       translateX.value = event.translationX + context.translateX;
       translateY.value = event.translationY + context.translateY;
-    },
+     },
     onEnd:()=>{
       const distance = Math.sqrt(translateX.value ** 2 + translateY.value ** 2);
 
-      if (distance < CIRCLE_RADIUS + SIZE / 2) {
+      if (distance < (width*0.3) + (width-100) / 2) {
         translateX.value = withSpring(0);
         translateY.value = withSpring(0);
       }
@@ -47,18 +48,24 @@ const PanGestureHandlerWork = () => {
         translateX: translateX.value,
       },
       {
-        translateY: translateY.value,
+        translateY: translateY.value-25,
       },
     ],
   };
 });
+
+
     
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
     <View style={styles.container}>
       <View style={styles.circle}>
         <PanGestureHandler onGestureEvent={panGestureEvent}>
-          <Animated.View style={[styles.square, rStyle]} />
+       
+          <Animated.View style={[styles.square, rStyle]} >
+            <Image source={require("../assets/playingCard.png")} style={styles.image} resizeMode="stretch" />
+          </Animated.View>
+       
         </PanGestureHandler>
       </View>
     </View>
@@ -70,23 +77,31 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
+    //alignItems: 'center',
     justifyContent: 'center',
   },
   square: {
-    width: SIZE,
-    height: SIZE,
-    backgroundColor: 'rgba(0, 0, 256, 0.5)',
-    borderRadius: 20,
+    width: width*0.3,
+    height: height*0.25,
+    backgroundColor: 'white',
+    borderRadius: 5,
+    borderWidth:1,
+    top:30
   },
     circle: {
-      width: CIRCLE_RADIUS * 2,
-      height: CIRCLE_RADIUS * 2,
+      width: width-100,
+      height: width-100,
       alignItems: 'center',
       justifyContent: 'center',
-      borderRadius: CIRCLE_RADIUS,
+      borderRadius: 25,
       borderWidth: 5,
       borderColor: 'rgba(0, 0, 256, 0.5)',
+      top:-100,
+      borderStyle:"dotted"
     },
+    image:{
+      width:"100%",
+      height:"100%"
+    }
 })
 export default PanGestureHandlerWork;
